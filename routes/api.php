@@ -21,3 +21,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['middleware' => ['auth:api']], function () {
+    Route::resource('checklist', ChecklistController::class)->only(['index', 'create','destroy']);
+});
